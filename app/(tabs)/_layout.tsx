@@ -3,12 +3,17 @@ import useAuthStore from '@/store/auth.store';
 import { TabBarIconProps } from '@/type';
 import cn from 'clsx';
 import { Redirect, Tabs } from 'expo-router';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 const TabBarIcon = ({ focused, icon, title }: TabBarIconProps) => {
     return (
         <View className="tab-icon">
-            <Image source={icon} className={'size-7'} resizeMode='contain' tintColor={focused ? '#fe8c00' : '#5d5f6d'} />
+            <Image
+                source={icon}
+                className={'size-7'}
+                resizeMode='contain'
+                tintColor={focused ? '#fe8c00' : '#5d5f6d'}
+            />
             <Text className={cn('text-sm font-bold', focused ? 'text-primary' : 'text-gray-200')}>
                 {title}
             </Text>
@@ -26,30 +31,47 @@ export default function TabLayout() {
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,
+                tabBarButton: ({ children, onPress, ...props }) => (
+                    <TouchableOpacity 
+                        onPress={onPress} 
+                        activeOpacity={0.7}
+                        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+                    >
+                        {children}
+                    </TouchableOpacity>
+                ),
                 tabBarStyle: {
                     borderTopLeftRadius: 50,
                     borderTopRightRadius: 50,
                     borderBottomLeftRadius: 50,
                     borderBottomRightRadius: 50,
                     marginHorizontal: 20,
+                    paddingBottom: 35,
+                    // alignItems: 'center',
                     height: 80,
                     position: 'absolute',
                     bottom: 40,
                     backgroundColor: '#fff',
                     shadowColor: '#1a1a1a',
-                    shadowOffset: {width: 0, height: 2},
+                    shadowOffset: { width: 0, height: 2 },
                     shadowOpacity: 0.1,
                     shadowRadius: 4,
                     elevation: 5,
-                }
+                },
             }}
         >
             <Tabs.Screen
                 name="index"
                 options={{
                     title: 'Home',
-                    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} icon={images.home} title='Home' />,
-                }} />
+                    tabBarIcon: ({ focused }) => (
+                        <TabBarIcon focused={focused} icon={images.home} title="Home" />
+                    ),
+                    headerPressColor: 'transparent',
+                    headerPressOpacity: .1
+                }}
+
+            />
             <Tabs.Screen
                 name="search"
                 options={{
@@ -60,9 +82,9 @@ export default function TabLayout() {
                 name="cart"
                 options={{
                     title: 'Cart',
-                    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} icon={images.bag} title='Cart' />   
+                    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} icon={images.bag} title='Cart' />
                 }} />
-            <Tabs.Screen    
+            <Tabs.Screen
                 name="profile"
                 options={{
                     title: 'Profile',
