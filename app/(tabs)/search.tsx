@@ -1,11 +1,12 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Search = () => {
+
     return (
-        <View>
-            <Text>Search</Text>
-        </View>
+        <SafeAreaView style={{ flex: 1, padding: 20 }}>
+            <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>Search</Text>
+        </SafeAreaView>
     )
 }
 
